@@ -1,0 +1,113 @@
+openapi: 3.0.3
+info:
+  title: Url shortener
+  description: Url shortener
+  version: 1.0.0
+servers:
+  - url: 'https://localhost'
+
+tags:
+  - name: URL
+    description: Creating short URL
+  - name: Statistics
+    description: Getting url redirection statistics
+
+paths:
+  /:
+    post:
+      summary: Create short URL
+      tags:
+        - URL
+      operationId: CreateShortURL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestURL"
+      responses:
+        201:
+          description: Short url created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationResponse"
+        400:
+          description: Bad request
+          content: {}
+        500:
+          description: Internal server error
+          content: {}
+  /{short-url}:
+    get:
+      summary: Redirect to original URL by short URL
+      tags:
+        - URL
+      operationId: RedirectURL
+      parameters:
+        - name: short-url
+          in: path
+          description: Short URL for redirect
+          required: true
+          schema:
+            type: string
+      responses:
+        301:
+          description: Successful operation
+        404:
+          description: Not found
+        500:
+          description: Internal server error
+  /statistics/{statistics-url}:
+    get:
+      summary: Get short url statistics
+      tags:
+        - Statistics
+      operationId: GetStatistics
+      parameters:
+        - name: statistics-url
+          in: path
+          description: Endpoint for getting short url stats
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatisticsResponse"
+        404:
+          description: not found
+        500:
+          description: Internal server error
+components:
+  schemas:
+    RequestURL:
+      type: object
+      properties:
+        url:
+          type: string
+          format: url
+    GenerationResponse:
+      type: object
+      properties:
+        shortURL:
+          type: string
+          format: url
+        statsURL:
+          type: string
+          format: url
+    StatisticsResponse:
+      type: object
+      properties:
+        originalURL:
+          type: string
+          format: url
+        shortURL:
+          type: string
+          format: url
+        redirects:
+          type: integer
+          format: int64
