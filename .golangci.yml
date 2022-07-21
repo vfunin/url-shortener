@@ -1,7 +1,6 @@
 linters:
   disable-all: true
   enable:
-    - bodyclose
     - deadcode
     - depguard
     - dogsled
@@ -23,16 +22,12 @@ linters:
     - ineffassign
     - misspell
     - nakedret
-    - noctx
     - nolintlint
-    - rowserrcheck
     - exportloopref
     - staticcheck
-    - structcheck
     - stylecheck
     - typecheck
     - unconvert
-    - unparam
     - unused
     - varcheck
     - whitespace
@@ -40,7 +35,6 @@ linters:
     - prealloc
     - wsl
     - nestif
-    - exhaustivestruct
 
 linters-settings:
   govet:
