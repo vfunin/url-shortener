@@ -1,23 +1,7 @@
 <script setup>
 import { directive as VueInputAutowidth } from "vue-input-autowidth";
-
-import { ref } from "vue";
-const isSubmitting = ref(false);
-const LoginOrCreate = async () => {
-  isSubmitting.value = true;
-  const response = await fetch("http://localhost:5000/loginorcreate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: "1" }),
-  }).then((res) => res.json());
-  if (response.success) {
-    console.log(1);
-  } else {
-    console.log(1);
-  }
-  isSubmitting.value = false;
-};
 </script>
+
 <template>
   <main
     class="home flex h-screen justify-center bg-gradient-to-br from-green-500 to-cyan-400 transition-opacity duration-700 ease-in opacity-0 max-w-full overflow-hidden"
@@ -30,7 +14,7 @@ const LoginOrCreate = async () => {
         <h1 class="text-4xl text-shadow font-black uppercase">Url shortener</h1>
       </div>
 
-      <form @submit.prevent="LoginOrCreate" class="align-middle">
+      <form class="align-middle">
         <label class="block mb-2 w-full mx-auto mt-16 text-center">
           <input
             type="text"
@@ -161,27 +145,25 @@ const LoginOrCreate = async () => {
     </section>
   </main>
 </template>
-
 <script>
 import useVuelidate from "@vuelidate/core";
 export default {
   directives: { autowidth: VueInputAutowidth },
   name: "HomeView",
-  data() {
-    return {
-      v$: useVuelidate(),
-      mainUrl: "",
-      focused: false,
-      shortUrl: "",
-      statisticsUrl: "",
-      isValid: false,
-      isSubmitting: false,
-      wasSubmitted: false,
-      showLinks: false,
-      showButton: false,
-      opacity: "",
-    };
-  },
+  data: () => ({
+  v$: useVuelidate(),
+  mainUrl: "",
+  focused: false,
+  shortUrl: "",
+  statisticsUrl: "",
+  isValid: false,
+  isSubmitting: false,
+  wasSubmitted: false,
+  showLinks: false,
+  showButton: false,
+  opacity: "",
+}
+),
   mounted() {
     setTimeout(() => {
       this.opacity = "opacity-100";
