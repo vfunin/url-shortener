@@ -1,15 +1,16 @@
-.PHONY: build
-build:
-	@echo 'Start build'
-	@echo 'The app was successfully built at ./bin/url-shortener'
-
 .PHONY: all
-all: lint test build run
+all: lint test run
 
 .PHONY: run
-run: build
+run:
 	@echo 'Start app'
-	@./bin/url-shortener
+	docker-compose up -d
+	@echo 'App started at http://localhost'
+
+.PHONY: stop
+stop:
+	@echo 'Stop app'
+	docker-compose down
 
 .PHONY: test
 test:
@@ -20,10 +21,3 @@ test:
 lint:
 	@echo 'Start lint'
 	golangci-lint run
-
-.PHONY: clean
-clean:
-	@echo '>> cleaning go'
-	@go clean
-	@echo '>> cleaning binaries'
-	@-rm -rf bin
