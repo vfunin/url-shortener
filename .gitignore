@@ -7,4 +7,5 @@
 *.ou
 /.idea/
 /bin/
+node_modules
 /coverage.txt
